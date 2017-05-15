@@ -9,7 +9,10 @@
 namespace Miky\Component\Commercial\Model;
 
 
-interface ProspectSheetInterface
+use Miky\Component\Core\Model\CommonModelInterface;
+use Miky\Component\User\Model\UserInfoInterface;
+
+interface ProspectSheetInterface extends CommonModelInterface, UserInfoInterface
 {
 
 }
