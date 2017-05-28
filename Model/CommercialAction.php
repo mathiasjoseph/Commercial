@@ -10,11 +10,15 @@ namespace Miky\Component\Commercial\Model;
 
 
 use Miky\Component\Classification\Model\CategoryInterface;
+use Miky\Component\Core\Model\CommonModelInterface;
+use Miky\Component\Core\Model\CommonModelTrait;
 use Miky\Component\User\Model\Employee;
 use Miky\Component\User\Model\User;
 
-class CommercialAction
+class CommercialAction implements CommonModelInterface
 {
+    Use CommonModelTrait;
+
     /**
      * @var \DateTime
      */
@@ -31,14 +35,14 @@ class CommercialAction
     protected $dunningDate;
 
     /**
-     * @var CustomerSheet
+     * @var CompanySheet
      */
-    protected $customerSheet;
+    protected $companySheet;
 
     /**
-     * @var ProspectSheet
+     * @var ContactSheet
      */
-    protected $prospectSheet;
+    protected $contactSheet;
 
     /**
      * @var integer
@@ -85,38 +89,6 @@ class CommercialAction
     public function setDunningDate($dunningDate)
     {
         $this->dunningDate = $dunningDate;
-    }
-
-    /**
-     * @return CustomerSheet
-     */
-    public function getCustomerSheet()
-    {
-        return $this->customerSheet;
-    }
-
-    /**
-     * @param CustomerSheet $customerSheet
-     */
-    public function setCustomerSheet($customerSheet)
-    {
-        $this->customerSheet = $customerSheet;
-    }
-
-    /**
-     * @return ProspectSheet
-     */
-    public function getProspectSheet()
-    {
-        return $this->prospectSheet;
-    }
-
-    /**
-     * @param ProspectSheet $prospectSheet
-     */
-    public function setProspectSheet($prospectSheet)
-    {
-        $this->prospectSheet = $prospectSheet;
     }
 
     /**
