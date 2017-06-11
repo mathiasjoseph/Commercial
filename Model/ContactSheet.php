@@ -45,7 +45,7 @@ class ContactSheet implements CommonModelInterface
     /**
      * @var LocationInterface
      */
-    protected $location;
+    protected $address;
 
     /**
      * @return string
@@ -130,16 +130,19 @@ class ContactSheet implements CommonModelInterface
     /**
      * @return LocationInterface
      */
-    public function getLocation()
+    public function getAddress()
     {
-        return $this->location;
+        return $this->address;
     }
 
     /**
-     * @param LocationInterface $location
+     * @param LocationInterface $address
      */
-    public function setLocation($location)
+    public function setAddress($address)
     {
-        $this->location = $location;
+        $this->address = $address;
     }
+
+
+
 }
