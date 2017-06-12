@@ -13,7 +13,7 @@ use Miky\Component\Core\Model\CommonModelInterface;
 use Miky\Component\Core\Model\CommonModelTrait;
 use Miky\Component\Location\Model\LocationInterface;
 
-class ContactSheet implements CommonModelInterface
+class ContactSheet implements CommonModelInterface, ContactSheetInterface
 {
     Use CommonModelTrait;
 
