@@ -24,7 +24,7 @@ class CompanySheet implements CommonModelInterface
     /**
      * @var string
      */
-    protected $siret;
+    protected $companyNumber;
 
     /**
      * @var string
@@ -44,7 +44,7 @@ class CompanySheet implements CommonModelInterface
     /**
      * @var LocationInterface
      */
-    protected $location;
+    protected $address;
 
     /**
      * @return string
@@ -111,36 +111,34 @@ class CompanySheet implements CommonModelInterface
     }
 
     /**
-     * @return LocationInterface
-     */
-    public function getLocation()
-    {
-        return $this->location;
-    }
-
-    /**
-     * @param LocationInterface $location
-     */
-    public function setLocation($location)
-    {
-        $this->location = $location;
-    }
-
-    /**
      * @return string
      */
-    public function getSiret()
+    public function getCompanyNumber()
     {
-        return $this->siret;
+        return $this->companyNumber;
     }
 
     /**
-     * @param string $siret
+     * @param string $companyNumber
      */
-    public function setSiret($siret)
+    public function setCompanyNumber($companyNumber)
     {
-        $this->siret = $siret;
+        $this->companyNumber = $companyNumber;
     }
 
+    /**
+     * @return LocationInterface
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
 
+    /**
+     * @param LocationInterface $address
+     */
+    public function setAddress($address)
+    {
+        $this->address = $address;
+    }
 }

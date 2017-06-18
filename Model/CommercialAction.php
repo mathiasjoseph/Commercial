@@ -9,15 +9,33 @@
 namespace Miky\Component\Commercial\Model;
 
 
-use Miky\Component\Classification\Model\CategoryInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Miky\Component\Category\Model\CategoryInterface;
 use Miky\Component\Core\Model\CommonModelInterface;
 use Miky\Component\Core\Model\CommonModelTrait;
-use Miky\Component\User\Model\Employee;
-use Miky\Component\User\Model\User;
 
-class CommercialAction implements CommonModelInterface
+
+class CommercialAction implements CommonModelInterface, CommercialActionInterface
 {
     Use CommonModelTrait;
+
+    const PRIORITY_LOW = 0;
+
+    const PRIORITY_NORMAL = 1;
+
+    const PRIORITY_HIGH = 2;
+
+    const PRIORITY_URGENT = 3;
+
+    /**
+     * @var string
+     */
+    protected $title;
+
+    /**
+     * @var string
+     */
+    protected $report;
 
     /**
      * @var \DateTime
@@ -35,29 +53,65 @@ class CommercialAction implements CommonModelInterface
     protected $dunningDate;
 
     /**
-     * @var CompanySheet
-     */
-    protected $companySheet;
-
-    /**
-     * @var ContactSheet
-     */
-    protected $contactSheet;
-
-    /**
      * @var integer
      */
     protected $priority;
 
     /**
-     * @var Employee
+     * @var CommercialActionWorkerInterface[]
      */
-    protected $employeeAgent;
+    protected $workers;
 
     /**
-     * @var User
+     * @var CommercialActionContactInterface[]
      */
-    protected $userAgent;
+    protected $contacts;
+
+    /**
+     * CommercialAction constructor.
+     */
+    public function __construct()
+    {
+        $this->workers = new ArrayCollection();
+        $this->contacts = new ArrayCollection();
+        $this->priority = self::PRIORITY_NORMAL;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param string $title
+     * @return CommercialActionInterface
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getReport()
+    {
+        return $this->report;
+    }
+
+    /**
+     * @param string $report
+     * @return CommercialActionInterface
+     */
+    public function setReport($report)
+    {
+        $this->report = $report;
+        return $this;
+    }
 
     /**
      * @return \DateTime
@@ -69,26 +123,12 @@ class CommercialAction implements CommonModelInterface
 
     /**
      * @param \DateTime $actionDate
+     * @return CommercialActionInterface
      */
     public function setActionDate($actionDate)
     {
         $this->actionDate = $actionDate;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getDunningDate()
-    {
-        return $this->dunningDate;
-    }
-
-    /**
-     * @param \DateTime $dunningDate
-     */
-    public function setDunningDate($dunningDate)
-    {
-        $this->dunningDate = $dunningDate;
+        return $this;
     }
 
     /**
@@ -101,10 +141,30 @@ class CommercialAction implements CommonModelInterface
 
     /**
      * @param CategoryInterface $category
+     * @return CommercialActionInterface
      */
     public function setCategory($category)
     {
         $this->category = $category;
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDunningDate()
+    {
+        return $this->dunningDate;
+    }
+
+    /**
+     * @param \DateTime $dunningDate
+     * @return CommercialActionInterface
+     */
+    public function setDunningDate($dunningDate)
+    {
+        $this->dunningDate = $dunningDate;
+        return $this;
     }
 
     /**
@@ -117,41 +177,98 @@ class CommercialAction implements CommonModelInterface
 
     /**
      * @param int $priority
+     * @return CommercialActionInterface
      */
     public function setPriority($priority)
     {
         $this->priority = $priority;
+        return $this;
+    }
+
+
+    /**
+     * @return CommercialActionWorkerInterface[]
+     */
+    public function getWorkers()
+    {
+        return $this->workers;
     }
 
     /**
-     * @return Employee
+     * @param CommercialActionWorkerInterface[] $workers
+     * @return CommercialActionInterface
      */
-    public function getEmployeeAgent()
+    public function setWorkers($workers)
     {
-        return $this->employeeAgent;
+        $this->workers = $workers;
+        return $this;
     }
 
     /**
-     * @param Employee $employeeAgent
+     * Add worker
+     *
+     * @param CommercialActionWorkerInterface $worker
+     *
+     * @return CommercialActionInterface
      */
-    public function setEmployeeAgent($employeeAgent)
+    public function addWorker(CommercialActionWorkerInterface $worker)
     {
-        $this->employeeAgent = $employeeAgent;
+        $worker->setCommercialAction($this);
+        $this->workers[] = $worker;
+
+        return $this;
     }
 
     /**
-     * @return User
+     * Remove worker
+     *
+     * @param CommercialActionWorkerInterface $worker
      */
-    public function getUserAgent()
+    public function removeWorker(CommercialActionWorkerInterface $worker)
     {
-        return $this->userAgent;
+        $this->workers->removeElement($worker);
     }
 
     /**
-     * @param User $userAgent
+     * @return CommercialActionContactInterface[]
      */
-    public function setUserAgent($userAgent)
+    public function getContacts()
     {
-        $this->userAgent = $userAgent;
+        return $this->contacts;
+    }
+
+    /**
+     * @param CommercialActionContactInterface[] $contacts
+     * @return CommercialActionInterface
+     */
+    public function setContacts($contacts)
+    {
+        $this->contacts = $contacts;
+        return $this;
+    }
+
+    /**
+     * Add contact
+     *
+     * @param CommercialActionContactInterface $contact
+     *
+     * @return CommercialActionInterface
+     */
+    public function addContact(CommercialActionContactInterface $contact)
+    {
+        $contact->setCommercialAction($this);
+        $this->contacts[] = $contact;
+
+        return $this;
+    }
+
+    /**
+     * Remove contact
+     *
+     * @param CommercialActionContactInterface $contact
+     */
+    public function removeContact(CommercialActionContactInterface $contact)
+    {
+        $this->contacts->removeElement($contact);
     }
 }

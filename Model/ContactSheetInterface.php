@@ -9,10 +9,6 @@
 namespace Miky\Component\Commercial\Model;
 
 
-use Miky\Component\Core\Model\CommonModelInterface;
-use Miky\Component\Core\Model\CommonModelTrait;
-use Miky\Component\Location\Model\LocationInterface;
-
 interface ContactSheetInterface
 {
 
