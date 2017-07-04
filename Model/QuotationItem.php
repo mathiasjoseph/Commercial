@@ -9,12 +9,16 @@
 namespace Miky\Component\Commercial\Model;
 
 
-use Miky\Component\Core\Model\CommonModelInterface;
 use Miky\Component\Core\Model\CommonModelTrait;
 
-class QuotationItem implements CommonModelInterface
+class QuotationItem implements QuotationItemInterface
 {
     Use CommonModelTrait;
+
+    /**
+     * @var mixed
+     */
+    protected $id;
 
     /**
      * @var string
@@ -32,14 +36,31 @@ class QuotationItem implements CommonModelInterface
     protected $price;
 
     /**
+     * @var QuotationInterface
+     */
+    protected $quotation;
+
+    /**
      * @var integer
      */
     protected $quantity;
 
     /**
-     * @var float
+     * QuotationItem constructor.
      */
-    protected $tax;
+    public function __construct()
+    {
+        $this->quantity = 1;
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * @return string
@@ -106,18 +127,20 @@ class QuotationItem implements CommonModelInterface
     }
 
     /**
-     * @return float
+     * @return QuotationInterface
      */
-    public function getTax()
+    public function getQuotation()
     {
-        return $this->tax;
+        return $this->quotation;
     }
 
     /**
-     * @param float $tax
+     * @param QuotationInterface $quotation
+     * @return QuotationItem
      */
-    public function setTax($tax)
+    public function setQuotation(QuotationInterface $quotation)
     {
-        $this->tax = $tax;
+        $this->quotation = $quotation;
+        return $this;
     }
 }
